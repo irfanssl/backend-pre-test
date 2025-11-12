@@ -6,12 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Task extends Model
 {
     use HasFactory;
 
-    protected $table = 'role';
-    public $timestamps = false;
+    protected $table = 'task';
 
     /**
      * The attributes that are mass assignable.
@@ -19,16 +18,14 @@ class Role extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'name'
+        'title',
+        'description',
+        'status_id',
+        'creator_id',
+        'assignee_id',
+        'report'
     ];
 
-    /**
-     * The user that belong to the role.
-     */
-    public function user()
-    {
-        return $this->hasMany(User::class, 'role_id', 'id');
-    }
-    
 
+    
 }
