@@ -1,5 +1,9 @@
 # Requirement 
-DB connection : sqlite (ini karena untuk mempermudah proses debugging dan unit testing)
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=kledo
+DB_PASSWORD=YourPassword
 
 
 
