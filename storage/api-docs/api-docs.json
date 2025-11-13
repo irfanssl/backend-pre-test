@@ -261,6 +261,159 @@
                     }
                 }
             }
+        },
+        "/api/tasks": {
+            "post": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Create task",
+                "description": "Create task endpoint",
+                "operationId": "b501d3c127bdc31918c636cfb6637b57",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "Task title, (50 characters max)",
+                                        "type": "string",
+                                        "maxLength": 50,
+                                        "example": "Cuci AC ruang kelas"
+                                    },
+                                    "description": {
+                                        "description": "Task desctription, (2000 characters max)",
+                                        "type": "string",
+                                        "maxLength": 2000,
+                                        "example": "Cuci seluruh AC ruang kelas, dari lantai 1 sampai 10."
+                                    },
+                                    "assignee_id": {
+                                        "description": "Assignee id. \n *                 - Jika Manager: hanya boleh menugaskan Staff yang menjadi bawahannya.\n *                 - Jika Staff: hanya boleh menugaskan dirinya sendiri.",
+                                        "type": "integer",
+                                        "example": 24,
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success create task",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success Create Task"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 26
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Cuci AC ruang kelas"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Cuci seluruh AC ruang kelas, dari lantai 1 sampai 10."
+                                                },
+                                                "status_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "creator_id": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "assignee_id": {
+                                                    "type": "integer",
+                                                    "example": 24,
+                                                    "nullable": true
+                                                },
+                                                "report": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-11-13T01:01:52.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-11-13T01:01:52.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation fail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "title": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The title field is required."
+                                                    }
+                                                },
+                                                "description": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The description field is required."
+                                                    }
+                                                },
+                                                "assignee_id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The selected assignee id is invalid or not your staff."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -276,6 +429,10 @@
         {
             "name": "Authentication",
             "description": "Authentication"
+        },
+        {
+            "name": "Task",
+            "description": "Task"
         }
     ]
 }
