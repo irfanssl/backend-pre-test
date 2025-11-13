@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\TaskService;
 use App\Http\Requests\TaskRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TaskStatusRequest;
 
 class TaskController extends Controller
 {
@@ -39,8 +40,23 @@ class TaskController extends Controller
             'data' => $taskService
         ]);
     }
-    public function updateStatus(){
-        return 'update status';
+    public function updateStatus($task, TaskStatusRequest $taskStatusRequest, TaskService $taskService){
+        $task = Task::find($task)->load('status');
+        if($task === null){
+            return response()->json([
+                'status' => 'Fail',
+                'message' => 'Task not found',
+                'data' => null
+            ], 404);
+        }
+        $updater = $taskStatusRequest->user();
+        $statusId = $taskStatusRequest->status_id;
+        $taskService = $taskService->changeStatus($task, $statusId, $updater);
+        return response()->json([
+            'status' => 'Success',
+            'message' => 'Success update task status',
+            'data' => $taskService
+        ]);
     }
     public function updateReport(){
         return 'update report';

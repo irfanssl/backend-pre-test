@@ -34,4 +34,13 @@ class Task extends Model
     {
         return $this->hasOne(Status::class, 'id', 'status_id');
     }
+
+
+    /**
+     * Task creator
+     */
+    public function creator()
+    {
+        return $this->hasOne(User::class, 'id', 'creator_id');
+    }
 }
