@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Services\TaskService;
+use App\Models\Status;
 use App\Models\User;
 
 /**
@@ -16,9 +17,16 @@ class TaskFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): void
+    public function definition(): array
     {
-        //
+        return [
+            'title' => $this->faker->sentence(3),
+            'description' => $this->faker->paragraph(),
+            'status_id' => Status::factory(),
+            'creator_id' => User::factory(),
+            'assignee_id' => null,
+            'report' => null,
+        ];
     }
 
     public function createWithService(array $data = [])
