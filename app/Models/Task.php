@@ -43,4 +43,13 @@ class Task extends Model
     {
         return $this->hasOne(User::class, 'id', 'creator_id');
     }
+
+
+    /**
+     * Task assignee
+     */
+    public function assignee()
+    {
+        return $this->hasOne(User::class, 'id', 'assignee_id');
+    }
 }

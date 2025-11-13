@@ -415,6 +415,168 @@
                 }
             }
         },
+        "/api/tasks/{id}/report": {
+            "patch": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Update Task Report",
+                "description": "Update task report endpoint",
+                "operationId": "5100e0cccf96e297b01de94e91b471c8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Task id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 26
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "report (5000 characters max)",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "report"
+                                ],
+                                "properties": {
+                                    "report": {
+                                        "description": "Isi laporan pekerjaan, maksimal 5000 karakter",
+                                        "type": "string",
+                                        "maxLength": 5000,
+                                        "example": "Seluruh AC ruang kelas asdis mengisi freon."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success update task report",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success update task report"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 26
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Cuci AC ruang kelas ssss"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Cuci seluruh AC rai 10."
+                                                },
+                                                "status_id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "creator_id": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "assignee_id": {
+                                                    "type": "integer",
+                                                    "example": 24
+                                                },
+                                                "report": {
+                                                    "type": "string",
+                                                    "example": "Seluruh AC ruang kelas asdis mengisi freon."
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-11-13T01:01:52.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-11-13T03:03:52.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation fail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "properties": {
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Report hanya dapat diisi saat status Doing."
+                                                },
+                                                "errors": {
+                                                    "properties": {
+                                                        "status": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string",
+                                                                "example": "Report hanya dapat diisi saat status Doing."
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "properties": {
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Hanya pembuat atau pelaksana yang dapat mengisi report."
+                                                },
+                                                "errors": {
+                                                    "properties": {
+                                                        "permission": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string",
+                                                                "example": "Hanya pembuat atau pelaksana yang dapat mengisi report."
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/tasks/{id}/status": {
             "patch": {
                 "tags": [

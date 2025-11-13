@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Services\TaskService;
 use App\Http\Requests\TaskRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TaskReportRequest;
 use App\Http\Requests\TaskStatusRequest;
 
 class TaskController extends Controller
@@ -41,7 +42,7 @@ class TaskController extends Controller
         ]);
     }
     public function updateStatus($task, TaskStatusRequest $taskStatusRequest, TaskService $taskService){
-        $task = Task::find($task)->load('status');
+        $task = Task::find($task);
         if($task === null){
             return response()->json([
                 'status' => 'Fail',
@@ -49,6 +50,7 @@ class TaskController extends Controller
                 'data' => null
             ], 404);
         }
+        $task = $task->load('status');
         $updater = $taskStatusRequest->user();
         $statusId = $taskStatusRequest->status_id;
         $taskService = $taskService->changeStatus($task, $statusId, $updater);
@@ -58,8 +60,24 @@ class TaskController extends Controller
             'data' => $taskService
         ]);
     }
-    public function updateReport(){
-        return 'update report';
+    public function updateReport($task, TaskReportRequest $taskReportRequest, TaskService $taskService){
+        $task = Task::find($task);
+        if($task === null){
+            return response()->json([
+                'status' => 'Fail',
+                'message' => 'Task not found',
+                'data' => null
+            ], 404);
+        }
+        $report = $taskReportRequest->validated();
+        $report = $report['report'];
+        $user = $taskReportRequest->user();
+        $taskService = $taskService->updateReport($task, $report, $user);
+        return response()->json([
+            'status' => 'Success',
+            'message' => 'Success update task report',
+            'data' => $taskService
+        ]);
     }
     public function show(){
         return 'show';
