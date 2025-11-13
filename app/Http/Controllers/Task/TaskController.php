@@ -79,7 +79,34 @@ class TaskController extends Controller
             'data' => $taskService
         ]);
     }
-    public function show(){
-        return 'show';
+    public function show($task){
+        $task = Task::find($task);
+        if($task === null){
+            return response()->json([
+                'status' => 'Fail',
+                'message' => 'Task not found',
+                'data' => null
+            ], 404);
+        }
+        $task = $task->load(['status', 'creator', 'assignee']);
+        $task = [
+            'id' => $task->id,
+            'title' => $task->title,
+            'description' => $task->description,
+            'status_id' => $task->status_id,
+            'status' => [
+                'name' => $task->status->name
+            ],
+            "creator_id" => $task->creator_id,
+            "creator" => [
+                "name"=> $task->creator->name
+            ],
+            "assignee_id" => $task->assignee_id,
+            "assignee" => [
+                "name"=> $task->assignee->name
+            ],
+            "report" => $task->report
+        ];
+        return response()->json($task);
     }
 }

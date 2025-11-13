@@ -415,6 +415,303 @@
                 }
             }
         },
+        "/api/tasks/{id}": {
+            "get": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Get Task Detail",
+                "description": "Task detail endpoint",
+                "operationId": "95193326e835e060d4ab51cbf7636831",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Task id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 25
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task detail retrieving success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 25
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Cuci AC ruang kelas"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "Cuci seluruh AC ruang kelas, dari lantai 1 sampai 10."
+                                        },
+                                        "status_id": {
+                                            "type": "integer",
+                                            "example": 2
+                                        },
+                                        "status": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Doing"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "creator_id": {
+                                            "type": "integer",
+                                            "example": 24
+                                        },
+                                        "creator": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Manager"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "assignee_id": {
+                                            "type": "integer",
+                                            "example": 24
+                                        },
+                                        "assignee": {
+                                            "properties": {
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Manager"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "report": {
+                                            "type": "string",
+                                            "example": "Seluruh AC ruang kelas asdis mengisi freon."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Fail"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Task not found"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": null,
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Task"
+                ],
+                "summary": "Update Task",
+                "description": "Endpoint updating task",
+                "operationId": "4058433d9b2e49ca1f5c91efe41b9d7c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Task id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 26
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "Task title, (50 characters max)",
+                                        "type": "string",
+                                        "maxLength": 50,
+                                        "example": "Cuci AC ruang kelas ssss"
+                                    },
+                                    "description": {
+                                        "description": "Task description, (2000 characters max)",
+                                        "type": "string",
+                                        "maxLength": 2000,
+                                        "example": "Cuci seluruh AC rai 10."
+                                    },
+                                    "assignee_id": {
+                                        "description": "Assignee id. \n *                 - Manager: hanya boleh assign ke staff miliknya.\n *                 - Staff: hanya boleh assign ke dirinya sendiri.",
+                                        "type": "integer",
+                                        "example": 24,
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success Create Task",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success Update Task"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 26
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Cuci AC ruang kelas ssss"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Cuci seluruh AC rai 10."
+                                                },
+                                                "status_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "creator_id": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "assignee_id": {
+                                                    "type": "integer",
+                                                    "example": 24,
+                                                    "nullable": true
+                                                },
+                                                "report": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-11-13T01:01:52.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-11-13T02:11:28.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Fail"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Task not found"
+                                        },
+                                        "data": {
+                                            "type": "string",
+                                            "example": null,
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation fail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "assignee_id": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "assignee_id harus merupakan staff dari manager yang sedang login."
+                                                    }
+                                                },
+                                                "assignee_id_prohibited": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "staff hanya boleh assign ke dirinya sendiri."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/tasks/{id}/report": {
             "patch": {
                 "tags": [
@@ -700,189 +997,6 @@
                                                     "items": {
                                                         "type": "string",
                                                         "example": "Status dari 'Doing' tidak dapat diubah menjadi 'Doing'."
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/tasks/{id}": {
-            "put": {
-                "tags": [
-                    "Task"
-                ],
-                "summary": "Update Task",
-                "description": "Endpoint updating task",
-                "operationId": "4058433d9b2e49ca1f5c91efe41b9d7c",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Task id",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 26
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "title",
-                                    "description"
-                                ],
-                                "properties": {
-                                    "title": {
-                                        "description": "Task title, (50 characters max)",
-                                        "type": "string",
-                                        "maxLength": 50,
-                                        "example": "Cuci AC ruang kelas ssss"
-                                    },
-                                    "description": {
-                                        "description": "Task description, (2000 characters max)",
-                                        "type": "string",
-                                        "maxLength": 2000,
-                                        "example": "Cuci seluruh AC rai 10."
-                                    },
-                                    "assignee_id": {
-                                        "description": "Assignee id. \n *                 - Manager: hanya boleh assign ke staff miliknya.\n *                 - Staff: hanya boleh assign ke dirinya sendiri.",
-                                        "type": "integer",
-                                        "example": 24,
-                                        "nullable": true
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Success Create Task",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "status": {
-                                            "type": "string",
-                                            "example": "Success"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Success Update Task"
-                                        },
-                                        "data": {
-                                            "properties": {
-                                                "id": {
-                                                    "type": "integer",
-                                                    "example": 26
-                                                },
-                                                "title": {
-                                                    "type": "string",
-                                                    "example": "Cuci AC ruang kelas ssss"
-                                                },
-                                                "description": {
-                                                    "type": "string",
-                                                    "example": "Cuci seluruh AC rai 10."
-                                                },
-                                                "status_id": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "creator_id": {
-                                                    "type": "integer",
-                                                    "example": 3
-                                                },
-                                                "assignee_id": {
-                                                    "type": "integer",
-                                                    "example": 24,
-                                                    "nullable": true
-                                                },
-                                                "report": {
-                                                    "type": "string",
-                                                    "example": null,
-                                                    "nullable": true
-                                                },
-                                                "created_at": {
-                                                    "type": "string",
-                                                    "format": "date-time",
-                                                    "example": "2025-11-13T01:01:52.000000Z"
-                                                },
-                                                "updated_at": {
-                                                    "type": "string",
-                                                    "format": "date-time",
-                                                    "example": "2025-11-13T02:11:28.000000Z"
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Task not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "status": {
-                                            "type": "string",
-                                            "example": "Fail"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Task not found"
-                                        },
-                                        "data": {
-                                            "type": "string",
-                                            "example": null,
-                                            "nullable": true
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation fail",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The given data was invalid."
-                                        },
-                                        "errors": {
-                                            "properties": {
-                                                "assignee_id": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string",
-                                                        "example": "assignee_id harus merupakan staff dari manager yang sedang login."
-                                                    }
-                                                },
-                                                "assignee_id_prohibited": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string",
-                                                        "example": "staff hanya boleh assign ke dirinya sendiri."
                                                     }
                                                 }
                                             },
